@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimplonWars Farm - API Live Demo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+        .api-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #FFD700;
+        }
+        .endpoint-test {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .endpoint-name {
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+        .test-button:hover {
+            background: #45a049;
+        }
+        .result-area {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .loading {
+            color: #FFD700;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #FFD700;
+            color: #333;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+        .server-status {
+            text-align: center;
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .server-online {
+            background: rgba(76, 175, 80, 0.3);
+            border: 1px solid #4CAF50;
+        }
+        .server-offline {
+            background: rgba(255, 107, 107, 0.3);
+            border: 1px solid #ff6b6b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 SimplonWars Farm - API Live Demo</h1>
+        
+        <div id="server-status" class="server-status server-offline">
+            🔴 Serveur Node.js hors ligne - Les données affichées sont statiques
+        </div>
+        
+        <div class="api-section">
+            <h2>🚀 Test des Endpoints API</h2>
+            
+            <div class="endpoint-test">
+                <div class="endpoint-name">GET /api - Tous les animaux</div>
+                <button class="test-button" onclick="testEndpoint('/api')">Tester</button>
+                <div id="result-api" class="result-area">Cliquez sur "Tester" pour voir les résultats...</div>
+            </div>
+            
+            <div class="endpoint-test">
+                <div class="endpoint-name">GET /api/random - Animal aléatoire</div>
+                <button class="test-button" onclick="testEndpoint('/api/random')">Tester</button>
+                <div id="result-random" class="result-area">Cliquez sur "Tester" pour voir les résultats...</div>
+            </div>
+            
+            <div class="endpoint-test">
+                <div class="endpoint-name">GET /api/random/3 - 3 animaux aléatoires</div>
+                <button class="test-button" onclick="testEndpoint('/api/random/3')">Tester</button>
+                <div id="result-random-3" class="result-area">Cliquez sur "Tester" pour voir les résultats...</div>
+            </div>
+            
+            <div class="endpoint-test">
+                <div class="endpoint-name">GET /api/planet/Tatooine - Animaux de Tatooine</div>
+                <button class="test-button" onclick="testEndpoint('/api/planet/Tatooine')">Tester</button>
+                <div id="result-planet" class="result-area">Cliquez sur "Tester" pour voir les résultats...</div>
+            </div>
+            
+            <div class="endpoint-test">
+                <div class="endpoint-name">GET /api/stats - Statistiques</div>
+                <button class="test-button" onclick="testEndpoint('/api/stats')">Tester</button>
+                <div id="result-stats" class="result-area">Cliquez sur "Tester" pour voir les résultats...</div>
+            </div>
+            
+            <div class="endpoint-test">
+                <div class="endpoint-name">GET /api/search/ban - Recherche "ban"</div>
+                <button class="test-button" onclick="testEndpoint('/api/search/ban')">Tester</button>
+                <div id="result-search" class="result-area">Cliquez sur "Tester" pour voir les résultats...</div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="/" class="cta-button">🏠 Page d'Accueil</a>
+            <a href="/api-docs.html" class="cta-button">📚 Documentation</a>
+            <a href="/starwars.html" class="cta-button">🎬 Animation Star Wars</a>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.3);">
+            <p>🌟 Développé par l'équipe <strong>Dev FRONT LENS P4</strong> 🌟</p>
+            <p>Formation Simplon - 2025</p>
+            <p><small>💡 Pour tester avec le vrai serveur, lancez <code>npm start</code> localement</small></p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration de l'API
+        const API_BASE_URL = 'http://localhost:8080';
+        
+        // Fonction pour tester un endpoint
+        async function testEndpoint(endpoint) {
+            const resultId = 'result' + endpoint.replace(/\//g, '-').replace(/[^a-zA-Z0-9-]/g, '');
+            const resultElement = document.getElementById(resultId);
+            
+            resultElement.innerHTML = '⏳ Chargement...';
+            resultElement.className = 'result-area loading';
+            
+            try {
+                const response = await fetch(API_BASE_URL + endpoint);
+                const data = await response.json();
+                
+                resultElement.innerHTML = JSON.stringify(data, null, 2);
+                resultElement.className = 'result-area success';
+                
+                // Mettre à jour le statut du serveur
+                updateServerStatus(true);
+            } catch (error) {
+                resultElement.innerHTML = '❌ Erreur: ' + error.message + '\n\n💡 Assurez-vous que le serveur Node.js est démarré avec npm start';
+                resultElement.className = 'result-area error';
+                
+                // Mettre à jour le statut du serveur
+                updateServerStatus(false);
+            }
+        }
+        
+        // Fonction pour mettre à jour le statut du serveur
+        function updateServerStatus(isOnline) {
+            const statusElement = document.getElementById('server-status');
+            if (isOnline) {
+                statusElement.innerHTML = '🟢 Serveur Node.js en ligne - Données en temps réel';
+                statusElement.className = 'server-status server-online';
+            } else {
+                statusElement.innerHTML = '🔴 Serveur Node.js hors ligne - Les données affichées sont statiques';
+                statusElement.className = 'server-status server-offline';
+            }
+        }
+        
+        // Vérifier le statut du serveur au chargement
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(API_BASE_URL + '/api');
+                if (response.ok) {
+                    updateServerStatus(true);
+                } else {
+                    updateServerStatus(false);
+                }
+            } catch (error) {
+                updateServerStatus(false);
+            }
+        });
+    </script>
+</body>
+</html>

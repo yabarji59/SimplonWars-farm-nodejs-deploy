@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimplonWars - Star Wars Intro</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <!-- 🎵 AUDIO STAR WARS - AUTOPLAY -->
+    <audio id="starWarsAudio" preload="auto" loop>
+      <source src="./assets/sound/Star_Wars_Main_Theme_Song.mp3" type="audio/mpeg">
+      Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+
+    <!-- 🎮 BOUTON POUR CONTRÔLER L'AUDIO -->
+    <div class="audio-controls">
+      <button id="audioToggle" class="audio-btn">
+        <span id="audioIcon">🔊</span> Mute
+      </button>
+    </div>
+
+    <div class="star-wars-intro">
+      <p class="intro-text">
+        Il y a bien longtemps, dans une galaxie lointaine,
+        très lointaine...
+      </p>
+
+      <h2 class="main-logo">
+        <img src="./assets/images/SimponWars.png" alt="SimplonWars Logo">
+      </h2>
+
+      <div class="main-content">
+        <div class="title-content">
+          <div class="content-header">
+            <h1>DEV FRONT END LENS P4</h1>
+            <h2>UN NOUVEL ESPOIR</h2>
+          </div>
+          <p>
+            C'est une époque de guerre… de bugs et de merge conflicts. Depuis leur base secrète à la Louvre Lens Vallée, de vaillants développeurs rebelles issus de la formation Simplon affrontent les forces obscures du CSS mal indenté et du JavaScript capricieux.
+          </p>
+          <p>
+            Lors d'une ultime bataille de débogage, les stagiaires ont réussi à subtiliser les plans secrets de l'arme absolue de l'Empire : la Pipeline de la Mort, une GitHub Action démoniaque capable de déployer automatiquement un site plein de bugs, sans même un `npm test`.
+          </p>
+          <p>
+            Pour sauver la prod, Luc Skybuildwalker, jeune dev en quête de sens et de pixels alignés, fuit à bord de son vaisseau-clé USB, guidé par Maître Yass-Wan Kenobi, mentor légendaire du commit propre et du déploiement sans panique.
+          </p>
+          <p>
+            Traqués par les bots de l'Empire (et par ESLint en mode ultra-strict), nos héros espèrent livrer à temps leur application responsive, pushée en continu, et capable de restaurer l'équilibre dans la galaxie du Front-End…
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Audio control functionality
+      const audio = document.getElementById('starWarsAudio');
+      const audioToggle = document.getElementById('audioToggle');
+      const audioIcon = document.getElementById('audioIcon');
+      
+      let isMuted = false;
+      let audioStarted = false;
+      
+      // Try to start audio with multiple attempts
+      function startAudio() {
+        if (audioStarted) return;
+        
+        audio.play()
+          .then(() => {
+            console.log('🎵 Audio démarré avec succès !');
+            audioStarted = true;
+            audioToggle.classList.add('playing');
+          })
+          .catch(error => {
+            console.log('🔇 Autoplay bloqué par le navigateur:', error.message);
+          });
+      }
+      
+      // Handle audio toggle
+      audioToggle.addEventListener('click', function() {
+        if (isMuted) {
+          audio.muted = false;
+          audioIcon.textContent = '🔊';
+          audioToggle.textContent = 'Mute';
+          isMuted = false;
+        } else {
+          audio.muted = true;
+          audioIcon.textContent = '🔇';
+          audioToggle.textContent = 'Unmute';
+          isMuted = true;
+        }
+      });
+      
+      // Start audio on any user interaction
+      document.addEventListener('click', startAudio, { once: true });
+      document.addEventListener('keydown', startAudio, { once: true });
+      document.addEventListener('touchstart', startAudio, { once: true });
+      
+      // 🎵 ÉVÉNEMENT FICTIF - Déclenche l'audio automatiquement
+      window.addEventListener('load', function() {
+        // Attendre 2 secondes puis déclencher l'audio
+        setTimeout(function() {
+          console.log('🎵 Événement fictif déclenché - Tentative de démarrage audio automatique');
+          startAudio();
+        }, 2000);
+      });
+      
+      // Additional attempts on user interaction
+      document.addEventListener('mousemove', startAudio, { once: true });
+      document.addEventListener('scroll', startAudio, { once: true });
+    </script>
+</body>
+</html>
+  

@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# Rediriger /api vers api.html
+RewriteRule ^api/?$ api.html [L]
+
+# Rediriger /starwars vers starwars.html
+RewriteRule ^starwars/?$ starwars.html [L]
+
+# Rediriger /api-docs vers api-docs.html
+RewriteRule ^api-docs/?$ api-docs.html [L]
+
+# Rediriger /api/random vers api.html
+RewriteRule ^api/random/?$ api.html [L]
+
+# Rediriger /api/stats vers api.html
+RewriteRule ^api/stats/?$ api.html [L]
+
+# Rediriger /api/search vers api.html
+RewriteRule ^api/search/?$ api.html [L]
+
+# Rediriger /api/planet vers api.html
+RewriteRule ^api/planet/?$ api.html [L]
